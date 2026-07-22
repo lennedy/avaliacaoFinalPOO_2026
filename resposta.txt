@@ -1,0 +1,3 @@
+3.
+b. nome_pacote é um atributo público e pode ser acessado por qualquer lugar, enquanto __limite_por_saque é um atributo privado, protegido pelo encapsulamento.
+c. ContaCorrente pode usar os métodos públicos criados em ContaBancaria pois ContaCorrente herda os métodos de ContaBancaria através da herança.
