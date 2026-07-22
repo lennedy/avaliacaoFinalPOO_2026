@@ -55,14 +55,34 @@ class Cliente:
     def adicionar_conta(self, conta: "ContaBancaria") -> None:
         if conta not in self.__contas:
             self.__contas.append(conta)
+    def quantidade_contas(self):
+        if len(self.__contas) >= 1:
+            return len(self.__contas)
+        else:
+            return len(self.__contas)
+    def consultar_saldo_total(self):
+        saldo_total = 0
+        for n in self.__contas:
+            saldo_total += n.get_saldo()
+        return saldo_total
 
 
 class ContaBancaria(ABC):
     def __init__(self, cliente: Cliente, numero: str, saldo: float):
         self.__cliente = cliente
         self.__numero = numero
-        self.__saldo = saldo
+        self.__saldo = saldo 
+        self.__ativa = True
         cliente.adicionar_conta(self)
+
+    def get_ativa(self) -> bool:
+        return self.__ativa
+    
+    def bloquear_conta(self) -> None:
+        self.__ativa = False
+
+    def desbloquear_conta(self) -> None:
+        self.__ativa = True
 
     def get_cliente(self) -> Cliente:
         return self.__cliente
@@ -88,10 +108,13 @@ class ContaBancaria(ABC):
         )
 
     def sacar(self, valor: float) -> bool:
-        if valor <= 0 or valor > self.__saldo:
+        if self.__ativa:
+            if valor <= 0 or valor > self.__saldo:
+                return False
+            self.__saldo -= valor
+            return True
+        else:
             return False
-        self.__saldo -= valor
-        return True
 
     def depositar(self, valor: float) -> bool:
         if valor <= 0:
@@ -110,14 +133,17 @@ class ContaBancaria(ABC):
     @abstractmethod
     def get_tipo_conta(self) -> str:
         pass
-
+    def pix(self, valor: float, conta_destino: "ContaBancaria"):
+        self.transferir(valor,conta_destino)
 
 class ContaCorrente(ContaBancaria):
     def __init__(self, cliente: Cliente, numero: str, saldo: float,
-                 limite: float, tarifa_mensal: float):
+                 limite: float, tarifa_mensal: float,limite_por_saque:float,nome_pacote:str):
         super().__init__(cliente, numero, saldo)
         self.__limite = limite
         self.__tarifa_mensal = tarifa_mensal
+        self.__limite_por_saque = limite_por_saque
+        self.nome_pacote = nome_pacote
 
     def get_limite(self) -> float:
         return self.__limite
@@ -126,7 +152,9 @@ class ContaCorrente(ContaBancaria):
         return self.__tarifa_mensal
 
     def sacar(self, valor: float) -> bool:
-        if valor <= 0:
+        if not self.get_ativa():
+            return False
+        if valor <= 0 or valor > self.__limite_por_saque:
             return False
         saldo_disponivel = self.get_saldo() + self.__limite
         if valor > saldo_disponivel:

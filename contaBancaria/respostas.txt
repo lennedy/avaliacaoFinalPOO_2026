@@ -1,0 +1,10 @@
+1 - Diferença entre nome_pacote e __limite_por_saque:
+    nome_pacote é um atributo público que pode ser acessado tanto no escopo da classe quanto fora dela,já __limite_por_saque é um atributo privado(indicado pelo double underline)
+    que só pode ser acessado dentro da própria classe ou fora dela por meio de métodos públicos ( ex: get_limite_por_saque() ),sem os métodos,não conseguimos acessar esse atributo privado
+    por causa de uma coisa no python chamado name mangling 
+2- Por que ContaCorrente pode utilizar os métodos públicos de ContaBancaria?
+    Porque no código,fizemos que ContaCorrente herdasse de ContaBancaria,uma vez que fizemos isso,ContaCorrente passou a ser classe filha da classe mãe ContaBancaria,e no python,quando
+    tratamos de Herança, entendemos que as classes filhas podem acessar os métodos públicos da classe mãe através do método super(),caso não a necessidade de mudar/sobrescrever esse método herdado,não precisamos
+    nem implementar na classe filha,pois ela já tem herdado o da classe mãe
+    
+
