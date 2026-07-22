@@ -58,6 +58,13 @@ class Cliente:
 
 
 class ContaBancaria(ABC):
+    def__init__ativa:bool
+    bloquear__conta()>None
+    desbloquear_conta()>None
+    get__ativa()
+    bloquear__conta()>None
+    desbloquear__conta()
+
     def __init__(self, cliente: Cliente, numero: str, saldo: float):
         self.__cliente = cliente
         self.__numero = numero
@@ -88,10 +95,10 @@ class ContaBancaria(ABC):
         )
 
     def sacar(self, valor: float) -> bool:
-        if valor <= 0 or valor > self.__saldo:
+         if valor <= 0 or valor > self.__saldo:
             return False
-        self.__saldo -= valor
-        return True
+    self.__saldo -= valor
+       return True
 
     def depositar(self, valor: float) -> bool:
         if valor <= 0:
@@ -113,6 +120,11 @@ class ContaBancaria(ABC):
 
 
 class ContaCorrente(ContaBancaria):
+    __limite_por_saque:float
+    get_limite_por_saque()>float
+    sacar(409)>bool
+    super()
+    nome_pacote:str
     def __init__(self, cliente: Cliente, numero: str, saldo: float,
                  limite: float, tarifa_mensal: float):
         super().__init__(cliente, numero, saldo)

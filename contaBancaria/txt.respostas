@@ -1,0 +1,4 @@
+1.o nome pacote é um atributo público,então pode ser acessado especificamente por quem esta usando a classe.
+
+
+2. porque conta corrente herda de conta bancaria,com isso pode usar os metodos da classe publica.
