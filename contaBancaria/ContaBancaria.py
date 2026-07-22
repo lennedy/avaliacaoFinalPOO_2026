@@ -107,6 +107,22 @@ class ContaBancaria(ABC):
             return True
         return False
 
+    def get_ativa(self, cliente: "Cliente") -> True:
+        self.__cliente = cliente
+    
+    def bloquear_conta(self, cliente: "Cliente") -> False:
+        self.__cliente = cliente
+    
+    def desbloquear_conta(self, cliente: "Cliente") -> True:
+        self.__cliente =  cliente
+    
+    def sacar(self, valor: float) -> bool:
+        if valor <=0:
+            return False
+        self.__saldo += valor
+        return True
+        
+
     @abstractmethod
     def get_tipo_conta(self) -> str:
         pass
@@ -146,6 +162,8 @@ class ContaCorrente(ContaBancaria):
 
     def get_tipo_conta(self) -> str:
         return "Conta Corrente"
+    
+    
 
 
 class ContaPoupanca(ContaBancaria):

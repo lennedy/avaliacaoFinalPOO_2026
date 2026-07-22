@@ -1,0 +1,5 @@
+3- Qual a diferença entre: nome_pacote e __limite_por_saque?
+O "nome_pacote" é um atributo público pois está fora da classe, já "__limite_por_saque" é um atributo privado pois está dentro da classe.
+
+Por que ContaCorrente pode utilizar os métodos públicos criados em ContaBancaria?
+A conta corrente pode utilizar os métodos públicos criados em ContaBancaria porque ele herda dessa e também pode modificar se for necessário.
