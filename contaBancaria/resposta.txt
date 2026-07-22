@@ -1,0 +1,13 @@
+RESPOSTAS - QUESTÃO 3 (Item B)
+
+i. Qual é a diferença entre:
+    1. nome_pacote
+    2. __limite_por_saque
+
+RESPOSTA:
+ - A diferente entre "nome_pacote" e "__limite_por_saque" é que nome_pacote é um atributo público, onde qualquer classe pode acessá-lo. Já o __limite_por_saque é um atributo privado da classe ContaCorrente. 
+
+ii. Por que ContaCorrente pode utilizar os métodos públicos criados em ContaBancaria?
+
+RESPOSTA:
+ - Isso ocorre devido ao pilar fundamental chamado "herança", onde a classe filha (ContaCorrente) pode herdar os elementos (métodos, etc) da classe mãe (ContaBancaria).
