@@ -36,11 +36,14 @@ class BancoApp:
         ]
 
         self.contas = [
-            ContaCorrente(cliente1, 1001, 500, 500, 10),
+            ContaCorrente(cliente1, 1001, 500, 500, 10, 100, 'nome qualquer'),
             ContaPoupanca(cliente2, 1002, 1000, 10),
             ContaPoupanca(cliente1, 1003, 300, 2),
-            ContaCorrente(cliente4, 1004, 20, 500, 10),
+            ContaCorrente(cliente4, 1004, 20, 500, 10, 100, 'nome qualquer'),
         ]
+
+        for conta in self.contas:
+            conta.desbloquear_conta()
 
         self.criar_interface()
 

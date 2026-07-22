@@ -63,6 +63,7 @@ class ContaBancaria(ABC):
         self.__numero = numero
         self.__saldo = saldo
         cliente.adicionar_conta(self)
+        self.__ativa = True
 
     def get_cliente(self) -> Cliente:
         return self.__cliente
@@ -88,7 +89,7 @@ class ContaBancaria(ABC):
         )
 
     def sacar(self, valor: float) -> bool:
-        if valor <= 0 or valor > self.__saldo:
+        if valor <= 0 or valor > self.__saldo or self.__ativa == False:
             return False
         self.__saldo -= valor
         return True
@@ -110,14 +111,27 @@ class ContaBancaria(ABC):
     @abstractmethod
     def get_tipo_conta(self) -> str:
         pass
+    
+    @property
+    def get_ativa(self) -> bool:
+        return self.__ativa
+    
+    def bloquear_conta(self) -> None:
+        self.__ativa = False
+
+    def desbloquear_conta(self) -> None:
+        self.__ativa = True
+
 
 
 class ContaCorrente(ContaBancaria):
     def __init__(self, cliente: Cliente, numero: str, saldo: float,
-                 limite: float, tarifa_mensal: float):
+                 limite: float, tarifa_mensal: float, limite_por_saque: float, nome_pacote: str):
         super().__init__(cliente, numero, saldo)
         self.__limite = limite
         self.__tarifa_mensal = tarifa_mensal
+        self.__limite_por_saque = limite_por_saque
+        self.nome_pacote = nome_pacote
 
     def get_limite(self) -> float:
         return self.__limite
@@ -126,10 +140,10 @@ class ContaCorrente(ContaBancaria):
         return self.__tarifa_mensal
 
     def sacar(self, valor: float) -> bool:
-        if valor <= 0:
+        if valor <= 0 or self.get_ativa == False:
             return False
         saldo_disponivel = self.get_saldo() + self.__limite
-        if valor > saldo_disponivel:
+        if valor > saldo_disponivel or valor > self.__limite_por_saque:
             return False
         self._alterar_saldo(self.get_saldo() - valor)
         return True
@@ -146,6 +160,9 @@ class ContaCorrente(ContaBancaria):
 
     def get_tipo_conta(self) -> str:
         return "Conta Corrente"
+    
+    def get_limite_por_saque(self) -> float:
+        return self.__limite_por_saque
 
 
 class ContaPoupanca(ContaBancaria):
